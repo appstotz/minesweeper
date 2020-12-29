@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import 'package:minesweeper/game/logic/RandomBombGenerator.dart';
 
 void main() {
-  group('test RandomBombGenerator',() {
+  group('test RandomBombGenerator', () {
     test('test argument exceptions', () async {
       final generator = RandomBombGenerator();
       try {
@@ -11,14 +11,14 @@ void main() {
       } catch (e) {
         expect(e, isA<ArgumentError>());
       }
-      
+
       try {
         generator.generateNewField(5, 0, 5, 2, 2);
         throw Exception("failed to throw error");
       } catch (e) {
         expect(e, isA<ArgumentError>());
       }
-      
+
       try {
         generator.generateNewField(5, 5, 0, 2, 2);
         throw Exception("failed to throw error");
@@ -47,7 +47,7 @@ void main() {
         expect(e, isA<ArgumentError>());
       }
     });
-    
+
     test('test normal generation', () async {
       final generator = RandomBombGenerator();
       final width = 5;
@@ -55,7 +55,8 @@ void main() {
       final bombs = 10;
       final startX = 2;
       final startY = 3;
-      final fields = generator.generateNewField(width, height, bombs, startX, startY);
+      final fields =
+          generator.generateNewField(width, height, bombs, startX, startY);
       expect(fields.length, width);
       expect(fields[startX][startY], false);
       var count = 0;
@@ -65,7 +66,5 @@ void main() {
       });
       expect(count, bombs);
     });
-
-
   });
 }

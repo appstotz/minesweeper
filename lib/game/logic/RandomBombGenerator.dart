@@ -1,6 +1,5 @@
 import 'dart:math';
 
-
 /// a Class to generate a random field for the bombs
 class RandomBombGenerator {
   /// generate a new field
@@ -23,14 +22,14 @@ class RandomBombGenerator {
     //  reduce 1 because causing the player to tap on a bomb at the beginning is no fun
     final neededFields = (width * height) - 1;
     List<int> bombLocations = List.empty(growable: true);
-    for(var i = 0; i < bombCount; i++){
+    for (var i = 0; i < bombCount; i++) {
       int newRandom = random.nextInt(neededFields);
-      while(true){
-        if(!bombLocations.contains(newRandom)){
+      while (true) {
+        if (!bombLocations.contains(newRandom)) {
           break;
         }
         newRandom++;
-        if(newRandom >= neededFields){
+        if (newRandom >= neededFields) {
           newRandom = 0;
         }
       }
@@ -40,6 +39,7 @@ class RandomBombGenerator {
         List.generate(neededFields, (index) => bombLocations.contains(index));
     return list;
   }
+
   List<List<bool>> generateNewField(
     int width,
     int height,
