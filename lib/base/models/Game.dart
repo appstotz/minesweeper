@@ -7,15 +7,19 @@ class Game {
 
   /// get the state of the game
   GameState get gameState {
+    var running = false;
     for (var column in board) {
       for (var value in column) {
         if (value.bomb && value.revealed) {
           return GameState.lost;
         }
         if (!value.bomb && !value.revealed) {
-          return GameState.running;
+          running = true;
         }
       }
+    }
+    if(running){
+      return GameState.running;
     }
     return GameState.win;
   }

@@ -21,13 +21,13 @@ class GameController {
   }
 
   /// the width for new boards
-  int boardWidth = 5;
+  int boardWidth = 10;
 
   /// the height for new boards
-  int boardHeight = 5;
+  int boardHeight = 10;
 
   /// the number of bombs for a new board
-  int bombCount = 5;
+  int bombCount = 20;
 
   /// begin a new game with pushing any field
   void beginNewGame(int x, int y) async {
@@ -102,11 +102,20 @@ class GameController {
   /// set revealed for a specific field
   void _setRevealed(List<List<Field>> fields, x, y) {
     var myField = fields[x][y];
-    fields[x][y] = Field(
-      myField.bomb,
-      true,
-      myField.flagged,
-      myField.totalBombs,
-    );
+    fields[x][y] = myField.setRevealed(true);
+  }
+
+  /// set flagged of a specific field
+  void flag(num x, num y) async {
+    var column = gameSubject.value.board[x];
+    var field = column[y];
+    column[y] = field.setFlagged(!field.flagged);
+    gameSubject.add(gameSubject.value);
+  }
+
+  /// reveal a specific field
+  void reveal(num x, num y) async {
+    _revealAround(gameSubject.value.board, x, y);
+    gameSubject.add(gameSubject.value);
   }
 }
