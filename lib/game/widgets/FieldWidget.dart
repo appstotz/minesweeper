@@ -10,15 +10,15 @@ class FieldWidget extends StatelessWidget {
   const FieldWidget(this._field);
 
   /// size of the field (TODO: move to another place?)
-  final double size = 10;
+  final double _size = 10;
 
-  final borderColor = Colors.black;
+  final _borderColor = Colors.black;
 
   @override
   Widget build(BuildContext context) {
     Widget content;
     final BoxBorder border = Border.all(
-      color: borderColor,
+      color: _borderColor,
     );
     if (_field.revealed) {
       if (_field.totalBombs == 0) {
@@ -29,10 +29,10 @@ class FieldWidget extends StatelessWidget {
         content = _bombCountWidget(_field.totalBombs);
       }
       final Decoration decoration =
-          BoxDecoration(color: Colors.grey.shade600, border: border);
+          BoxDecoration(color: Colors.white, border: border);
       return Container(
-        width: size,
-        height: size,
+        width: _size,
+        height: _size,
         decoration: decoration,
         child: Center(
           child: content,
@@ -47,7 +47,7 @@ class FieldWidget extends StatelessWidget {
       return Material(
         elevation: 5,
         child: Container(
-          color: Colors.green,
+          color: Colors.grey,
           child: Center(
             child: content,
           ),
@@ -60,7 +60,7 @@ class FieldWidget extends StatelessWidget {
   Widget _bombWidget() {
     return Icon(
       Icons.whatshot_outlined,
-      size: 5,
+      size: 35,
       color: Colors.red,
     );
   }
@@ -70,6 +70,7 @@ class FieldWidget extends StatelessWidget {
     return Text(
       count.toString(),
       style: TextStyle(
+        fontSize: 35,
         color: Colors.amber,
       ),
     );
@@ -79,7 +80,7 @@ class FieldWidget extends StatelessWidget {
   Widget _flaggedField() {
     return Icon(
       Icons.flag,
-      size: 5,
+      size: 35,
       color: Colors.red,
     );
   }
