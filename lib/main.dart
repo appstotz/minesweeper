@@ -3,8 +3,6 @@ import 'package:minesweeper/game/logic/GameController.dart';
 import 'package:minesweeper/game/widgets/GamePage.dart';
 import 'package:provider/provider.dart';
 
-import 'base/models/Game.dart';
-
 void main() {
   runApp(MyApp());
 }
@@ -22,47 +20,38 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
+  static const String GAME_ROUTE = "/game";
+
+  static const String SETTINGS_ROUTE = "/settings";
+
+  /// the routes for the app
+  Map<String, Widget Function(BuildContext)> _routes = Map.unmodifiable(
+    Map.fromEntries([
+      MapEntry(
+        GAME_ROUTE,
+        (context) => GamePage(),
+      ),
+    ]),
+  );
+
   @override
   Widget build(BuildContext context) {
     _gameController.beginNewGame(2, 2);
+
+    var app = MaterialApp(
+      title: 'Minesweeper',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: GAME_ROUTE,
+      routes: _routes,
+    );
+
     return Provider(
       create: (BuildContext context) {
         return _gameController;
       },
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: StreamBuilder(
-          stream: _gameController.gameSubject,
-          // ignore: missing_return
-          builder: (BuildContext context, AsyncSnapshot<Game> snapshot) {
-            if (snapshot.hasData) {
-              switch (snapshot.data.gameState) {
-                case GameState.running:
-                  return GamePage();
-                case GameState.win:
-                  return Container(
-                    color: Colors.black,
-                    child: Center(
-                      child: Text("You win"),
-                    ),
-                  );
-                case GameState.lost:
-                  return Container(
-                    color: Colors.black,
-                    child: Center(
-                      child: Text("You lose"),
-                    ),
-                  );
-              }
-            } else {
-              return CircularProgressIndicator();
-            }
-          },
-        ),
-      ),
+      child: app,
     );
   }
 }

@@ -8,9 +8,53 @@ import 'package:provider/provider.dart';
 class GamePage extends StatelessWidget {
   const GamePage();
 
+  /// the button to restart the game for the dialogs
+  Widget _restartButton(BuildContext context, GameController gameController) {
+    return RaisedButton(
+      onPressed: () {
+        gameController.beginNewGame(2, 2);
+        Navigator.pop(context);
+      },
+      child: Text("restart"),
+    );
+  }
+
+  /// show a dialog
+  void _showDialog(BuildContext context, GameController gameController,
+      String title, Key key) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return AlertDialog(
+          key: key,
+          title: Text(
+            title,
+          ),
+          actions: [
+            _restartButton(context, gameController),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var gameController = Provider.of<GameController>(context);
+    gameController.gameSubject.listen((game) {
+      switch (game.gameState) {
+        case GameState.running:
+          return;
+          break;
+        case GameState.win:
+          _showDialog(context, gameController, "You win", Key("winDialog"));
+          break;
+        case GameState.lost:
+          _showDialog(context, gameController, "You lose", Key("loseDialog"));
+          break;
+      }
+    });
 
     return StreamBuilder(
       stream: gameController.gameSubject,
