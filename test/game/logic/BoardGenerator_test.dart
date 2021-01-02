@@ -47,6 +47,21 @@ void main() {
       }
     });
 
+    test('test empty board generation', () async {
+      final generator = BoardGenerator();
+      var width = 5;
+      var height = 4;
+      var board = generator.generateEmptyField(width, height);
+      board.forEach((column) {
+        column.forEach((element) {
+          expect(element.bomb, false);
+          expect(element.flagged, false);
+          expect(element.revealed, false);
+          expect(element.totalBombs, 0);
+        });
+      });
+    });
+
     test('test full board generation', () async {
       final generator = BoardGenerator();
       var width = 5;

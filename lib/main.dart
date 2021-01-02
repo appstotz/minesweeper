@@ -20,6 +20,12 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _gameController.beginNewGame();
+  }
+
   static const String GAME_ROUTE = "/game";
 
   static const String SETTINGS_ROUTE = "/settings";
@@ -36,8 +42,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    _gameController.beginNewGame(2, 2);
-
     var app = MaterialApp(
       title: 'Minesweeper',
       theme: ThemeData(

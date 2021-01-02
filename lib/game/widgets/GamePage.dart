@@ -12,7 +12,7 @@ class GamePage extends StatelessWidget {
   Widget _restartButton(BuildContext context, GameController gameController) {
     return RaisedButton(
       onPressed: () {
-        gameController.beginNewGame(2, 2);
+        gameController.beginNewGame();
         Navigator.pop(context);
       },
       child: Text("restart"),

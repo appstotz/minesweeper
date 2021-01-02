@@ -9,10 +9,11 @@ void main() {
       var controller = GameController();
       expect(controller.gameSubject.hasValue, false);
       controller.gameSubject.listen((value) {});
-      controller.beginNewGame(startX, startY);
+      await controller.beginNewGame();
+      await controller.reveal(startX, startY);
 
-      var game = await controller.gameSubject.first.timeout(
-        Duration(seconds: 3),
+      var game = await controller.gameSubject.last.timeout(
+        Duration(milliseconds: 100),
       );
 
       var startField = game.board[startY][startY];
@@ -41,16 +42,17 @@ void main() {
       var controller = GameController();
       expect(controller.gameSubject.hasValue, false);
       controller.gameSubject.listen((value) {});
-      controller.beginNewGame(startX, startY);
+      await controller.beginNewGame();
+      await controller.reveal(startX, startY);
 
-      var game = await controller.gameSubject.first.timeout(
-        Duration(seconds: 3),
+      var game = await controller.gameSubject.last.timeout(
+        Duration(milliseconds: 100),
       );
 
       int foundY;
       int foundX = game.board.indexWhere((element) {
-        var found = element.indexWhere((field) =>
-        !field.revealed && !field.bomb);
+        var found =
+            element.indexWhere((field) => !field.revealed && !field.bomb);
         if (found != -1) {
           foundY = found;
           return true;
@@ -59,10 +61,37 @@ void main() {
       });
 
       expect(game.board[foundX][foundY].revealed, false);
-      controller.reveal(foundX, foundY);
-      expectLater(await controller.gameSubject.stream.any((element) => element
-          .board[foundX][foundY].revealed).timeout(Duration(seconds: 3),),
+      await controller.reveal(foundX, foundY);
+      expectLater(
+          await controller.gameSubject.stream
+              .any((element) => element.board[foundX][foundY].revealed)
+              .timeout(
+                Duration(milliseconds: 100),
+              ),
           true);
+
+      controller.dismiss();
+    });
+
+    test('test new game', () async {
+      var controller = GameController();
+      expect(controller.gameSubject.hasValue, false);
+      controller.gameSubject.listen((value) {});
+      await controller.beginNewGame();
+
+      var game = await controller.gameSubject.first.timeout(
+        Duration(milliseconds: 100),
+      );
+
+      expect(game.bombCount, 0);
+      game.board.forEach((column) {
+        column.forEach((element) {
+          expect(element.totalBombs, 0);
+          expect(element.revealed, false);
+          expect(element.flagged, false);
+          expect(element.bomb, false);
+        });
+      });
 
       controller.dismiss();
     });
@@ -73,16 +102,17 @@ void main() {
       var controller = GameController();
       expect(controller.gameSubject.hasValue, false);
       controller.gameSubject.listen((value) {});
-      controller.beginNewGame(startX, startY);
+      await controller.beginNewGame();
+      await controller.reveal(startX, startY);
 
-      var game = await controller.gameSubject.first.timeout(
-        Duration(seconds: 3),
+      var game = await controller.gameSubject.last.timeout(
+        Duration(milliseconds: 100),
       );
 
       int foundY;
       int foundX = game.board.indexWhere((element) {
-        var found = element.indexWhere((field) =>
-        !field.revealed && !field.bomb);
+        var found =
+            element.indexWhere((field) => !field.revealed && !field.bomb);
         if (found != -1) {
           foundY = found;
           return true;
@@ -92,8 +122,12 @@ void main() {
 
       expect(game.board[foundX][foundY].revealed, false);
       controller.flag(foundX, foundY);
-      expectLater(await controller.gameSubject.stream.any((element) => element
-          .board[foundX][foundY].flagged).timeout(Duration(seconds: 3),),
+      expectLater(
+          await controller.gameSubject.stream
+              .any((element) => element.board[foundX][foundY].flagged)
+              .timeout(
+                Duration(seconds: 3),
+              ),
           true);
 
       controller.dismiss();

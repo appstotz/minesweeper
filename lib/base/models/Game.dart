@@ -18,6 +18,7 @@ class Game {
     return count;
   }
 
+  /// the count of all the bombs
   final int bombCount;
 
   /// get the state of the game

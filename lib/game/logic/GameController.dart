@@ -29,8 +29,15 @@ class GameController {
   /// the number of bombs for a new board
   int bombCount = 20;
 
+  /// begin a new game with an empty field
+  Future<void> beginNewGame() async {
+    var board = _boardGenerator.generateEmptyField(boardWidth, boardHeight);
+    var game = Game(board);
+    gameSubject.add(game);
+  }
+
   /// begin a new game with pushing any field
-  void beginNewGame(int x, int y) async {
+  void _beginNewGame(int x, int y) async {
     var bombs = _randomBombGenerator.generateNewField(
         boardWidth, boardHeight, bombCount, x, y);
     var newField = _boardGenerator.generateField(bombs);
@@ -113,8 +120,12 @@ class GameController {
     gameSubject.add(gameSubject.value);
   }
 
-  /// reveal a specific field
-  void reveal(num x, num y) async {
+  /// reveal a specific field or begin a new game a new game
+  Future<void> reveal(num x, num y) async {
+    if (gameSubject.value.bombCount == 0) {
+      _beginNewGame(x, y);
+      return;
+    }
     _revealAround(gameSubject.value.board, x, y);
     gameSubject.add(gameSubject.value);
   }

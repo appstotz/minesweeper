@@ -2,6 +2,18 @@ import 'package:minesweeper/base/models/Field.dart';
 
 /// a generator for the board
 class BoardGenerator {
+  /// generate a new empty playing field
+  List<List<Field>> generateEmptyField(int width, int height) {
+    final generatedList = List.generate(
+      width,
+      (_) => List.generate(
+        height,
+        (_) => Field(false, false, false, 0),
+      ),
+    );
+    return generatedList;
+  }
+
   /// generate a board with a list of set bombs
   List<List<Field>> generateField(List<List<bool>> bombField) {
     final int width = bombField.length;
