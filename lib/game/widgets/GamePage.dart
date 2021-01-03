@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:minesweeper/base/models/Game.dart';
 import 'package:minesweeper/game/logic/GameController.dart';
 import 'package:minesweeper/game/widgets/BoardWidget.dart';
+import 'package:minesweeper/main.dart';
 import 'package:provider/provider.dart';
 
 /// the page for the game
@@ -64,6 +65,12 @@ class GamePage extends StatelessWidget {
             appBar: AppBar(
               title: Text("Game"),
               actions: [
+                IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    Navigator.pushNamed(context, MyApp.SETTINGS_ROUTE);
+                  },
+                ),
                 _BoardHeaderWidget(snapshot.data.flags, Icons.flag),
                 _BoardHeaderWidget(snapshot.data.bombCount, Icons.whatshot),
               ],

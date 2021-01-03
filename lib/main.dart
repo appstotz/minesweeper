@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper/game/logic/GameController.dart';
 import 'package:minesweeper/game/widgets/GamePage.dart';
+import 'package:minesweeper/settings/SettingsPage.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -8,6 +9,11 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+
+  static const String GAME_ROUTE = "/game";
+
+  static const String SETTINGS_ROUTE = "/settings";
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -26,16 +32,16 @@ class _MyAppState extends State<MyApp> {
     _gameController.beginNewGame();
   }
 
-  static const String GAME_ROUTE = "/game";
-
-  static const String SETTINGS_ROUTE = "/settings";
-
   /// the routes for the app
   Map<String, Widget Function(BuildContext)> _routes = Map.unmodifiable(
     Map.fromEntries([
       MapEntry(
-        GAME_ROUTE,
+        MyApp.GAME_ROUTE,
         (context) => GamePage(),
+      ),
+      MapEntry(
+        MyApp.SETTINGS_ROUTE,
+        (context) => SettingsPage(),
       ),
     ]),
   );
@@ -47,7 +53,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: GAME_ROUTE,
+      initialRoute: MyApp.GAME_ROUTE,
       routes: _routes,
     );
 
