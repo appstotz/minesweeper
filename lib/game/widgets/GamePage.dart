@@ -61,6 +61,12 @@ class GamePage extends StatelessWidget {
       stream: gameController.gameSubject,
       builder: (BuildContext context, AsyncSnapshot<Game> snapshot) {
         if (snapshot.hasData) {
+          var bombCount;
+          if(snapshot.data.bombCount == 0){
+            bombCount = gameController.bombCount;
+          } else {
+            bombCount = snapshot.data.bombCount;
+          }
           return Scaffold(
             appBar: AppBar(
               title: Text("Game"),
@@ -72,7 +78,7 @@ class GamePage extends StatelessWidget {
                   },
                 ),
                 _BoardHeaderWidget(snapshot.data.flags, Icons.flag),
-                _BoardHeaderWidget(snapshot.data.bombCount, Icons.whatshot),
+                _BoardHeaderWidget(bombCount, Icons.whatshot),
               ],
             ),
             body: BoardWidget(
