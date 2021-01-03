@@ -1,0 +1,30 @@
+{
+  "restart": "restart",
+  "@restart": {
+    "description": "restart"
+  },
+  "you_win": "You win",
+  "@you_win": {
+    "description": "title of dialog upon winning"
+  },
+  "you_lose": "You lose",
+  "@you_lose": {
+    "description": "title of dialog upon losing"
+  },
+  "game": "Game",
+  "@game": {
+    "description": "title of game page"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "title of settings page"
+  },
+  "bomb_count": "bomb count",
+  "@bomb_count": {
+    "description": "text for the settings page"
+  },
+  "board_size": "board size",
+  "@board_size": {
+    "description": "text for the settings page"
+  }
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minesweeper/game/logic/GameController.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPage extends StatelessWidget {
   /// possible values for the count of the bombs
@@ -15,14 +16,14 @@ class SettingsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: Text(AppLocalizations.of(context).settings),
       ),
       body: Container(
         child: ListView(
           children: [
             _SettingsSelector(
               _bombCounts,
-              "Bomb Count",
+              AppLocalizations.of(context).bomb_count,
               gameController.bombCount,
               (selected) {
                 if (selected == gameController.bombCount) {
@@ -34,7 +35,7 @@ class SettingsPage extends StatelessWidget {
             ),
             _SettingsSelector(
               _boardSizes,
-              "Board Size",
+              AppLocalizations.of(context).board_size,
               gameController.boardHeight,
               (selected) {
                 if (selected == gameController.boardHeight) {

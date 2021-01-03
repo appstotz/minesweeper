@@ -1,0 +1,9 @@
+{
+  "restart": "neu starten",
+  "you_win": "Sieg",
+  "you_lose": "Verloren",
+  "game": "Spiel",
+  "settings": "Einstellungen",
+  "bomb_count": "Bombenanzahl",
+  "board_size": "Feldgröße"
+}

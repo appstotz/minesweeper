@@ -4,6 +4,7 @@ import 'package:minesweeper/game/logic/GameController.dart';
 import 'package:minesweeper/game/widgets/BoardWidget.dart';
 import 'package:minesweeper/main.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// the page for the game
 class GamePage extends StatelessWidget {
@@ -16,7 +17,7 @@ class GamePage extends StatelessWidget {
         gameController.beginNewGame();
         Navigator.pop(context);
       },
-      child: Text("restart"),
+      child: Text(AppLocalizations.of(context).restart),
     );
   }
 
@@ -49,10 +50,20 @@ class GamePage extends StatelessWidget {
           return;
           break;
         case GameState.win:
-          _showDialog(context, gameController, "You win", Key("winDialog"));
+          _showDialog(
+            context,
+            gameController,
+            AppLocalizations.of(context).you_win,
+            Key("winDialog"),
+          );
           break;
         case GameState.lost:
-          _showDialog(context, gameController, "You lose", Key("loseDialog"));
+          _showDialog(
+            context,
+            gameController,
+            AppLocalizations.of(context).you_lose,
+            Key("loseDialog"),
+          );
           break;
       }
     });
@@ -62,14 +73,14 @@ class GamePage extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<Game> snapshot) {
         if (snapshot.hasData) {
           var bombCount;
-          if(snapshot.data.bombCount == 0){
+          if (snapshot.data.bombCount == 0) {
             bombCount = gameController.bombCount;
           } else {
             bombCount = snapshot.data.bombCount;
           }
           return Scaffold(
             appBar: AppBar(
-              title: Text("Game"),
+              title: Text(AppLocalizations.of(context).game),
               actions: [
                 IconButton(
                   icon: Icon(Icons.settings),

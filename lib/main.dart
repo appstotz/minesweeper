@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:minesweeper/game/logic/GameController.dart';
 import 'package:minesweeper/game/widgets/GamePage.dart';
 import 'package:minesweeper/settings/SettingsPage.dart';
@@ -53,6 +54,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       initialRoute: MyApp.GAME_ROUTE,
       routes: _routes,
     );
