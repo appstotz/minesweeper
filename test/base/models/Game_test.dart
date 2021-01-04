@@ -29,6 +29,15 @@ void main() {
       expect(gameWin.bombCount, 2);
       expect(gameWin.flags, 0);
 
+      var boardWinFlag = [
+        [bombFlagged, bombFlagged],
+        [emptyRevealed, emptyHidden]
+      ];
+      var gameWinFlag = Game(boardWinFlag);
+      expect(gameWinFlag.gameState, GameState.win);
+      expect(gameWinFlag.bombCount, 2);
+      expect(gameWinFlag.flags, 2);
+
       var boardLost = [
         [bombRevealed, bombHidden],
         [bombFlagged, emptyHidden]

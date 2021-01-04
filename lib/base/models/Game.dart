@@ -24,15 +24,28 @@ class Game {
   /// get the state of the game
   GameState get gameState {
     var running = false;
+    var flaggedBombs = 0;
+    var flaggedWrongField = false;
     for (var column in board) {
       for (var value in column) {
-        if (value.bomb && value.revealed) {
-          return GameState.lost;
-        }
-        if (!value.bomb && !value.revealed) {
-          running = true;
+        if(value.bomb) {
+          if (value.revealed) {
+            return GameState.lost;
+          } else if(value.flagged) {
+            flaggedBombs++;
+          }
+        } else {
+          if (!value.revealed) {
+            running = true;
+          }
+          if(value.flagged){
+            flaggedWrongField = true;
+          }
         }
       }
+    }
+    if(bombCount != 0 && !flaggedWrongField && flaggedBombs == bombCount){
+      return GameState.win;
     }
     if (running) {
       return GameState.running;
