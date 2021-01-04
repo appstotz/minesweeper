@@ -50,6 +50,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var app = MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Minesweeper',
       theme: ThemeData(
         primarySwatch: Colors.blue,
